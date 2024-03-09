@@ -1,24 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+
+import ROUTES from "./routes";
+import TableUserAddress from "./components/TableUserAddress";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<TableUserAddress />} path={ROUTES.USER_ADDRESS} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

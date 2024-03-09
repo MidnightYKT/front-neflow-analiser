@@ -1,13 +1,12 @@
 import { api } from "./api";
 
-export const login = api.injectEndpoints({
+export const address = api.injectEndpoints({
   endpoints: (build) => ({
-    getStatsCourier: build.query({
+    getUserAddress: build.query({
       query: ({ user_address }) => `/user/${user_address}`,
       providesTags: ["userAddress"],
     }),
   }),
 });
 
-export const { useLoginEmailMutation, useLoginMutation, useRegisterMutation } =
-  login;
+export const { useGetUserAddress } = address;
