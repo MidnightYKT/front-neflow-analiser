@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, message, Modal, Divider, Badge } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasks } from "../service/api";
+import ModalTableUserAddress from "./ModalTableUserAddress";
+import { useGetUserAddressQuery } from "../service/UserAddressIp";
 
 const TableUserAddress = () => {
-  const todoList = useSelector((state) => state.todoList);
-  const dispatch = useDispatch();
+  const [open, setOpen] = useState();
+  const [dataChange, setDataChange] = useState();
+  const { data, error, isLoading } = useGetUserAddressQuery();
 
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, []);
-
-  console.log(todoList);
-
-  const dataSource = todoList?.map(
+  const dataSource = data?.map(
     (item) =>
       (item = {
         DstIP: item.DstIP,
@@ -21,17 +18,12 @@ const TableUserAddress = () => {
         Pkts: item.Pkts,
       })
   );
-  console.log(dataSource);
 
   const columns = [
     {
       title: "DstIP",
       dataIndex: "DstIP",
       key: "DstIP",
-      // width: 80,
-      // align: "center",
-      // defaultSortOrder: "ascend",
-      // sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Octets",
@@ -43,6 +35,26 @@ const TableUserAddress = () => {
       dataIndex: "Pkts",
       key: "Pkts",
     },
+    {
+      title: "",
+      dataIndex: "id",
+      key: "x",
+      align: "center",
+      render: (id, active) => (
+        <span className="xs:flex">
+          <Button
+            type="primary"
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white px-4 border border-blue-500 hover:border-transparent rounded"
+            onClick={() => {
+              setOpen(true);
+              setDataChange(active);
+            }}
+          >
+            Информация
+          </Button>
+        </span>
+      ),
+    },
   ];
 
   return (
@@ -52,9 +64,14 @@ const TableUserAddress = () => {
           <Table
             columns={columns}
             dataSource={dataSource}
-            rowKey="id"
-            // loading={isLoading}
+            rowKey="DstIP"
+            loading={isLoading}
             scroll={{ x: 800 }}
+          />
+          <ModalTableUserAddress
+            open={open}
+            setOpen={setOpen}
+            dataChange={dataChange}
           />
         </div>
       </main>

@@ -1,7 +1,7 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 
 import ROUTES from "./routes";
-import TableUserAddress from "./components/TableUserAddress";
+import TableUserAddress from "./components/TableUserAddress.js";
 
 function App() {
   return (
